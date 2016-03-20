@@ -3,7 +3,8 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+<!-- chart -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <meta charset="utf-8">
   <title>Mashape Query</title>
@@ -11,24 +12,78 @@
 <body>
 
   <button onclick="search()">Run the request</button>
+  <canvas id="myChart" width="400" height="400"></canvas>
+    
   <div id="output">The API request is:</div>
-  <img id="card" onclick="displayName()" src="img_pulpitrock.jpg" alt="Pulpit Rock" width="284" height="213"><br>
-<div id="portfolio" class="container-fluid text-center bg-grey">
-  <h2>Result</h2><br>
-  <div class="row text-center slideanim">
-  </div>
+  <div id="portfolio" class="container-fluid text-center bg-grey">
+
 </div>
+    
 </body>
 
-
-    
 <script>
+$( document ).ready(function() {
+   //var ctx = document.getElementById("myChart").getContext("2d");
+   // var myNewChart = new Chart(ctx).PolarArea(data);
+   // Get context with jQuery - using jQuery's .get() method.
+  /* var ctx = $("#myChart").get(0).getContext("2d");
+   // This will get the first returned node in the jQuery collection.
+   var myRadarChart = new Chart(ctx).Radar(data);*/
+    
+});    
 
+</script>
+
+<script>
+var cards = [];
+var cost_len=[];
+for(var i =0;i<=10;i++){
+    cost_len[i] = 0;
+}
+var att_len=[];
+for(var i =0;i<=12;i++){
+    att_len[i] = 0;
+}
+
+function displayChart(cards){
+    
+    //assume mapping total of each cost 
+
+   var data = {
+    labels: ["zero","one", "two", "three", "four", "five", "six", "seven","eight","nine","ten","elven","twelve"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [cost_len[0],cost_len[1],cost_len[2],cost_len[3],cost_len[4],cost_len[5],cost_len[6],cost_len[7],cost_len[8],cost_len[9],cost_len[10],0,0]
+        },
+        {
+            label: "My First dataset 2",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [att_len[0],att_len[1],att_len[2],att_len[3],att_len[4],att_len[5],att_len[6],att_len[7],att_len[8],att_len[9],att_len[10],att_len[11],att_len[12]]
+        },
+    ]
+   }
+   var ctx = $("#myChart").get(0).getContext("2d");
+   // This will get the first returned node in the jQuery collection.
+   var myRadarChart = new Chart(ctx).Radar(data);
+}
+    
 function displayName(name){
     
     alert(name); 
 }
- var cards = [];
+    
 function search() { 
    var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
    var jqxhr = $.get(apiUrl, function(data) {
@@ -44,41 +99,98 @@ function search() {
  }
 function loopCard(data){
     //ingore credit debug hero skin mission promotion system tavern brawl
-
     var len = 0;
  
     $.each(data.Basic,function(i,entry){
-        cards.push(data.Basic[i]); 
+       if(data['Basic'][i].cost>=0){ 
+            cost_len[parseInt(data[('Basic')][i].cost)]++;
+       }
+         if(data['Basic'][i].attack>=0){ 
+            att_len[parseInt(data[('Basic')][i].attack)]++;
+         }
+        cards.push(data.Basic[i])
     });
     $.each(data['Blackrock Mountain'],function(i,entry){
-        cards.push(data['Blackrock Mountain'][i]); 
+         if(data['Blackrock Mountain'][i].cost>=0){ 
+            cost_len[parseInt(data[('Blackrock Mountain')][i].cost)]++;
+         }
+         if(data['Blackrock Mountain'][i].attack>=0){ 
+            att_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
+         }
+         cards.push(data['Blackrock Mountain'][i]); 
     });
     $.each(data['Classic'],function(i,entry){
+         if(data['Classic'][i].cost>=0){ 
+            cost_len[parseInt(data[('Classic')][i].cost)]++;
+         }
+        if(data['Classic'][i].attack>=0){ 
+            att_len[parseInt(data[('Classic')][i].attack)]++;
+         }
         cards.push(data['Classic'][i]); 
     });
     $.each(data['Goblins vs Gnomes'],function(i,entry){
+         if(data['Goblins vs Gnomes'][i].cost>=0){ 
+            cost_len[parseInt(data[('Goblins vs Gnomes')][i].cost)]++;
+         }
+        if(data['Goblins vs Gnomes'][i].attack>=0){ 
+            att_len[parseInt(data[('Goblins vs Gnomes')][i].attack)]++;
+         }
         cards.push(data['Goblins vs Gnomes'][i]); 
     });
 
     $.each(data['Naxxramas'],function(i,entry){
+         if(data['Naxxramas'][i].cost>=0){ 
+            cost_len[parseInt(data[('Naxxramas')][i].cost)]++;
+         }
+        if(data['Naxxramas'][i].attack>=0){ 
+            att_len[parseInt(data[('Naxxramas')][i].attack)]++;
+         }
         cards.push(data['Naxxramas'][i]); 
     });
     
     $.each(data['The Grand Tournament'],function(i,entry){
+         if(data['The Grand Tournament'][i].cost>=0){ 
+            cost_len[parseInt(data[('The Grand Tournament')][i].cost)]++;
+         }
+         if(data['The Grand Tournament'][i].attack>=0){ 
+            att_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
+         }
         cards.push(data['The Grand Tournament'][i]); 
     });
 
     $.each(data['The League of Explorers'],function(i,entry){
+         if(data['The League of Explorers'][i].cost>=0){ 
+            cost_len[parseInt(data[('The League of Explorers')][i].cost)]++;
+         }
+        if(data['The League of Explorers'][i].attack>=0){ 
+            att_len[parseInt(data[('The League of Explorers')][i].attack)]++;
+         }
         cards.push(data['The League of Explorers'][i]); 
     });
     console.log(cards);
+    
+    
+    
     displayCards(cards);
+    displayChart();
+    
 }
       var strHtml = "";
       var imgUrl;
       var numCardThisRow = 0;    
       var counter = 0;
 function displayCards(cards){
+    /*
+    Clear DOM before adding card to DOM
+    */
+   var myNode = document.getElementById("portfolio");
+        if(myNode.firstChild != null){
+           while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+        }
+
+    
     $.each(cards, function (i, entry) {
         
         imgUrl = "http://wow.zamimg.com/images/hearthstone/backs/original/Card_Back_Default.png";
@@ -119,8 +231,9 @@ function displayCards(cards){
       }  
 
 
-      $("#portfolio .slideanim").after(strHtml);  
+      $("#portfolio").after(strHtml);  
       console.log("total " + counter)
+      
 }
     
 </script>
