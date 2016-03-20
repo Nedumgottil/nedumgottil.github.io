@@ -1,204 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="Anthony Nedumgottil" content="">
-
-    <title>Nedumgo - Main</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/scrolling-nav.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+  <title>Mashape Query</title>
 </head>
+<body>
 
-<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
-
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Nedumgottil</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/portfolio.html">Portfolio</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/contact.html">Contact</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/blog.html">Blog</a>
-                    </li>
-
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-
-    <!-- Intro Section -->
-    <section id="intro" class="intro-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Hello!</h1>
-                    <p>There's nothing here now but more too come soon!  </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>About Section</h1>
-                    <p> 
-                        Hello, I'm Anthony Nedumgottil!
-
-                        I'm currently attending the University of Illinois at Chicago working towards my Bachelors of Science in Computer Science. Feel free to contact me and check out my projects in the portfolio page!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        d
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section 
-    <section id="services" class="services-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Services Section</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    Contact Section 
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Contact Section</h1>
-                </div>
-            </div>
-        </div>
-    </section>
--->
-    <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p>Chicago, IL</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Around the Web</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="https://www.reddit.com/" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Contact</h3>
-                        <p>[CONTACT INFO GOES HERE]</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; Your Website 2014
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Scrolling Nav JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/scrolling-nav.js"></script>
-
+  <button onclick="search()">Run the request</button>
+  <div id="output">The API request is:</div>
+  <img id="card" onclick="displayName()" src="img_pulpitrock.jpg" alt="Pulpit Rock" width="284" height="213"><br>
+<div id="portfolio" class="container-fluid text-center bg-grey">
+  <h2>Result</h2><br>
+  <div class="row text-center slideanim">
+  </div>
+</div>
 </body>
 
+
+    
+<script>
+
+function displayName(name){
+    
+    alert(name); 
+}
+ var cards = [];
+function search() { 
+   var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
+   var jqxhr = $.get(apiUrl, function(data) {
+             if (data.length == 0)
+                console.log("noResults");
+             else
+               console.log(data);
+               loopCard(data);
+          })
+   .fail (function() {
+              console.log("fail");
+          });     
+ }
+function loopCard(data){
+    //ingore credit debug hero skin mission promotion system tavern brawl
+
+    var len = 0;
+ 
+    $.each(data.Basic,function(i,entry){
+        cards.push(data.Basic[i]); 
+    });
+    $.each(data['Blackrock Mountain'],function(i,entry){
+        cards.push(data['Blackrock Mountain'][i]); 
+    });
+    $.each(data['Classic'],function(i,entry){
+        cards.push(data['Classic'][i]); 
+    });
+    $.each(data['Goblins vs Gnomes'],function(i,entry){
+        cards.push(data['Goblins vs Gnomes'][i]); 
+    });
+
+    $.each(data['Naxxramas'],function(i,entry){
+        cards.push(data['Naxxramas'][i]); 
+    });
+    
+    $.each(data['The Grand Tournament'],function(i,entry){
+        cards.push(data['The Grand Tournament'][i]); 
+    });
+
+    $.each(data['The League of Explorers'],function(i,entry){
+        cards.push(data['The League of Explorers'][i]); 
+    });
+    console.log(cards);
+    displayCards(cards);
+}
+      var strHtml = "";
+      var imgUrl;
+      var numCardThisRow = 0;    
+      var counter = 0;
+function displayCards(cards){
+    $.each(cards, function (i, entry) {
+        
+        imgUrl = "http://wow.zamimg.com/images/hearthstone/backs/original/Card_Back_Default.png";
+        articleLinkText = "";
+        articleUrl = "";
+        if (cards[i].img){
+             imgUrl = cards[i].img;
+            counter++;
+        
+        //  start a new row for each three tiles
+        
+            if (numCardThisRow == 0) {
+              strHtml += '<div class="row text-center slideanim slide">';
+            }
+
+            numCardThisRow++;
+
+
+            strHtml += '<div class="col-sm-4">'
+                        +   '<div class="thumbnail">'
+                        +    '<img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
+                        +     imgUrl
+                        +     '"alt="'
+                        +     cards[i].name
+                        +     '" width="400" height="300">'
+                        +  '</div>'
+                        + '</div>';
+
+            if (numCardThisRow == 3) {    // close the row after each 3 movies
+              strHtml += '</div>';
+              numCardThisRow = 0;
+            }  
+        }
+      });
+      
+      if (numCardThisRow != 0) {    // if !=0, we haven't closed the row div
+          strHtml += '</div>';
+      }  
+
+
+      $("#portfolio .slideanim").after(strHtml);  
+      console.log("total " + counter)
+}
+    
+</script>
 </html>
