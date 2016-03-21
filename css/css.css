@@ -1,3 +1,8 @@
+
+body{
+  
+}
+
 ul {
   list-style: none;
 }
@@ -26,4 +31,8 @@ li span {
 }
 #chart-area > *{
   float:left
+}
+.thumbnail{
+    border-style: hidden;
+    padding: 0px !important;
 }

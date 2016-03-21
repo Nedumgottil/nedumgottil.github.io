@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="css/css.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- chart -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <meta charset="utf-8">
-  <title>Mashape Query</title>
-</head>
-<body>
 
-  <button onclick="search()">Run the request</button>
-  <div id="chart-area">
+<link rel="stylesheet" type="text/css" href="css/css.css">
+<title>Mashape Query</title>
+</head>
+<body >
+
+  <button onclick="search()">Run the request</button> 
+  <div id="output"></div>
+  <div id="portfolio" class="container-fluid text-center bg-grey">
+      
+ 
+
+  </div>
+    <div id="chart-area">
     <canvas id="myChart" width="400" height="400"></canvas>
     <div id="legend"></div>  
   </div>  
-  <div id="output"></div>
-  <div id="portfolio" class="container-fluid text-center bg-grey">
-
-</div>
-    
 </body>
 
 <script>
@@ -38,7 +39,6 @@ $( document ).ready(function() {
 </script>
 
 <script>
-var cards = [];
 var cost_len=[];
 for(var i =0;i<=10;i++){
     cost_len[i] = 0;
@@ -47,11 +47,21 @@ var att_len=[];
 for(var i =0;i<=12;i++){
     att_len[i] = 0;
 }
-
+var myChart;
 function displayChart(cards){
     
     //assume mapping total of each cost 
-
+    
+     var myNode = document.getElementById("legend");
+        if(myNode.firstChild != null){
+           while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+        }
+    }
+    /*if(myChart){
+      myChart.destroy();
+    }*/
+    
    var data = [
    {
     value: cost_len[0],
@@ -108,11 +118,11 @@ function displayChart(cards){
         animateScale: false,
         percentageInnerCutout: 50
     }
-   var ctx = $("#myChart").get(0).getContext("2d");
-   // This will get the first returned node in the jQuery collection.
+    $('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
+    var ctx = $("#myChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    myChart = new Chart(ctx).Doughnut(data, options);    
     
-    var myChart = new Chart(ctx).Doughnut(data, options);    
-
     
     var legendHolder = document.createElement('div');
     legendHolder.innerHTML = myChart.generateLegend();
@@ -125,7 +135,7 @@ function displayName(name){
     alert(name); 
 }
     
-function search() { 
+function search() {
    var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
    var jqxhr = $.get(apiUrl, function(data) {
              if (data.length == 0)
@@ -141,7 +151,16 @@ function search() {
 function loopCard(data){
     //ingore credit debug hero skin mission promotion system tavern brawl
     var len = 0;
- 
+    var cards = [];
+    for(var i =0;i<=10;i++){
+        cost_len[i] = 0;
+    }
+    for(var i =0;i<=12;i++){
+        att_len[i] = 0;
+    }
+    
+    
+    
     $.each(data.Basic,function(i,entry){
        if(data['Basic'][i].cost>=0){ 
             cost_len[parseInt(data[('Basic')][i].cost)]++;
@@ -211,26 +230,21 @@ function loopCard(data){
     console.log(cards);
     
     
-    
+    $( "#portfolio" ).empty();
     displayCards(cards);
     displayChart();
     
 }
-      var strHtml = "";
-      var imgUrl;
-      var numCardThisRow = 0;    
-      var counter = 0;
+      
 function displayCards(cards){
+    var strHtml = "";
+    var imgUrl;
+    var numCardThisRow = 0;    
+    var counter = 0;
     /*
     Clear DOM before adding card to DOM
     */
-   var myNode = document.getElementById("portfolio");
-        if(myNode.firstChild != null){
-           while (myNode.firstChild) {
-                myNode.removeChild(myNode.firstChild);
-            }
-        }
-
+    $( "#portfolio" ).empty();
     
     $.each(cards, function (i, entry) {
         
@@ -251,7 +265,7 @@ function displayCards(cards){
 
 
             strHtml += '<div class="col-sm-4">'
-                        +   '<div class="thumbnail">'
+                        +   '<div class="thumbnail" id="cardlayer">'
                         +    '<img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
                         +     imgUrl
                         +     '"alt="'
@@ -272,9 +286,9 @@ function displayCards(cards){
       }  
 
 
-      $("#portfolio").after(strHtml);  
+      $("#portfolio").append(strHtml);  
       console.log("total " + counter)
-      
+
 }
     
 </script>
