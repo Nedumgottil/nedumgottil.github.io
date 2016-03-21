@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/css.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- chart -->
@@ -12,9 +13,11 @@
 <body>
 
   <button onclick="search()">Run the request</button>
-  <canvas id="myChart" width="400" height="400"></canvas>
-    
-  <div id="output">The API request is:</div>
+  <div id="chart-area">
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <div id="legend"></div>  
+  </div>  
+  <div id="output"></div>
   <div id="portfolio" class="container-fluid text-center bg-grey">
 
 </div>
@@ -49,34 +52,72 @@ function displayChart(cards){
     
     //assume mapping total of each cost 
 
-   var data = {
-    labels: ["zero","one", "two", "three", "four", "five", "six", "seven","eight","nine","ten","elven","twelve"],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [cost_len[0],cost_len[1],cost_len[2],cost_len[3],cost_len[4],cost_len[5],cost_len[6],cost_len[7],cost_len[8],cost_len[9],cost_len[10],0,0]
-        },
-        {
-            label: "My First dataset 2",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [att_len[0],att_len[1],att_len[2],att_len[3],att_len[4],att_len[5],att_len[6],att_len[7],att_len[8],att_len[9],att_len[10],att_len[11],att_len[12]]
-        },
-    ]
-   }
+   var data = [
+   {
+    value: cost_len[0],
+    color: "#66ccff",
+    label: "Cost 0"
+
+    }, {
+    value: cost_len[1],
+    color: "#99ccff",
+    label: "Cost 1"
+    }, {
+    value: cost_len[2],
+    color: "#cc99ff",
+    label: "Cost 2"
+    },{
+    value: cost_len[3],
+    color: "#ff99ff",
+    label: "Cost 3"  
+    },{
+    value: cost_len[4],
+    color: "#ff99cc",
+    label: "Cost 4"  
+    },{
+    value: cost_len[5],
+    color: "#ff9999",
+    label: "Cost 5"  
+    },{
+    value: cost_len[6],
+    color: "#ffcc99",
+    label: "Cost 6"  
+    },{
+    value: cost_len[7],
+    color: "#ffff99",
+    label: "Cost 7"  
+    },{
+    value: cost_len[8],
+    color: "#ccff99",
+    label: "Cost 8"  
+    },{
+    value: cost_len[9],
+    color: "#99ff99",
+    label: "Cost 9"  
+    },{
+    value: cost_len[10],
+    color: "#99ffcc",
+    label: "Cost 10"  
+    }
+   
+   ];
+    
+    var options = {
+        segmentShowStroke: false,
+        animateRotate: true,
+        animateScale: false,
+        percentageInnerCutout: 50
+    }
    var ctx = $("#myChart").get(0).getContext("2d");
    // This will get the first returned node in the jQuery collection.
-   var myRadarChart = new Chart(ctx).Radar(data);
+    
+    var myChart = new Chart(ctx).Doughnut(data, options);    
+
+    
+    var legendHolder = document.createElement('div');
+    legendHolder.innerHTML = myChart.generateLegend();
+
+    document.getElementById('legend').appendChild(legendHolder.firstChild);
 }
     
 function displayName(name){
