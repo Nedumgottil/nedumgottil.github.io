@@ -1,295 +1,431 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<!-- chart -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <title>Yo!</title>
+    <!-- Include meta tag to ensure proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- Include jQuery Mobile stylesheets -->
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    
+    <!-- Include the jQuery library -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- Include the jQuery Mobile library -->
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <!-- chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script>
+    $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+    </script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
 
-<link rel="stylesheet" type="text/css" href="css/css.css">
-<title>Mashape Query</title>
+    <link rel="stylesheet" type="text/css" href="css.css">
+    
+<style>
+
+</style>
 </head>
-<body >
-
-  <button onclick="search()">Run the request</button> 
-  <div id="output"></div>
-  <div id="portfolio" class="container-fluid text-center bg-grey">
-      
- 
-
-  </div>
-    <div id="chart-area">
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <div id="legend"></div>  
-  </div>  
-</body>
-
+<body>
 <script>
-$( document ).ready(function() {
-   //var ctx = document.getElementById("myChart").getContext("2d");
-   // var myNewChart = new Chart(ctx).PolarArea(data);
-   // Get context with jQuery - using jQuery's .get() method.
-  /* var ctx = $("#myChart").get(0).getContext("2d");
-   // This will get the first returned node in the jQuery collection.
-   var myRadarChart = new Chart(ctx).Radar(data);*/
+    /*
+        
+        if no advanced options were selected
+            -check if searchVal is not empty
+                -call simple_search api
+                
+        if advanced option is selected
+            -Pop up new widow with radio buttons for all catagories
+                    -if none were selected
+                        -Keep button text to "Show all cards"
+                            - call advanced_search() api
+                    -if one or more is selected
+                        -Change button text to "Show selected"
+                            - call advanced_search() api
+                            
+    */
     
-});    
-
+    $('#search-form').submit(function(){
+        console.log("Yo it works!");
+        console.log($("#search").val());
+    })
+    $( document ).bind( 'mobileinit', function(){
+      $.mobile.loader.prototype.options.text = "loading";
+      $.mobile.loader.prototype.options.textVisible = false;
+      $.mobile.loader.prototype.options.theme = "a";
+      $.mobile.loader.prototype.options.html = "";
+    });
+    $.mobile.loading( 'show', {
+        text: 'foo',
+        textVisible: true,
+        theme: 'z',
+        html: ""
+    });
+    
+    function simple_search() { 
+       var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+$("#search").val()+"?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
+        console.log(apiUrl);
+       var jqxhr = $.get(apiUrl, function(data) {
+                 if (data.length == 0)
+                    console.log("noResults");
+                 else
+                    console.log(data);
+              })
+       .fail (function() {
+                  console.log("fail");
+              });     
+     }
+    
+    function advanced_search() { 
+       var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
+       var jqxhr = $.get(apiUrl, function(data) {
+                 if (data.length == 0)
+                    console.log("noResults");
+                 else
+                   console.log(data);
+              })
+       .fail (function() {
+                  console.log("fail");
+              });     
+    }
+    
 </script>
-
+    
 <script>
-var cost_len=[];
-for(var i =0;i<=10;i++){
-    cost_len[i] = 0;
-}
-var att_len=[];
-for(var i =0;i<=12;i++){
-    att_len[i] = 0;
-}
-var myChart;
-function displayChart(cards){
-    
-    //assume mapping total of each cost 
-    
-     var myNode = document.getElementById("legend");
-        if(myNode.firstChild != null){
-           while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-        }
-    }
-    /*if(myChart){
-      myChart.destroy();
-    }*/
-    
-   var data = [
-   {
-    value: cost_len[0],
-    color: "#66ccff",
-    label: "Cost 0"
-
-    }, {
-    value: cost_len[1],
-    color: "#99ccff",
-    label: "Cost 1"
-    }, {
-    value: cost_len[2],
-    color: "#cc99ff",
-    label: "Cost 2"
-    },{
-    value: cost_len[3],
-    color: "#ff99ff",
-    label: "Cost 3"  
-    },{
-    value: cost_len[4],
-    color: "#ff99cc",
-    label: "Cost 4"  
-    },{
-    value: cost_len[5],
-    color: "#ff9999",
-    label: "Cost 5"  
-    },{
-    value: cost_len[6],
-    color: "#ffcc99",
-    label: "Cost 6"  
-    },{
-    value: cost_len[7],
-    color: "#ffff99",
-    label: "Cost 7"  
-    },{
-    value: cost_len[8],
-    color: "#ccff99",
-    label: "Cost 8"  
-    },{
-    value: cost_len[9],
-    color: "#99ff99",
-    label: "Cost 9"  
-    },{
-    value: cost_len[10],
-    color: "#99ffcc",
-    label: "Cost 10"  
-    }
-   
-   ];
-    
-    var options = {
-        segmentShowStroke: false,
-        animateRotate: true,
-        animateScale: false,
-        percentageInnerCutout: 50
-    }
-    $('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
-    var ctx = $("#myChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
-    myChart = new Chart(ctx).Doughnut(data, options);    
-    
-    
-    var legendHolder = document.createElement('div');
-    legendHolder.innerHTML = myChart.generateLegend();
-
-    document.getElementById('legend').appendChild(legendHolder.firstChild);
-}
-    
-function displayName(name){
-    
-    alert(name); 
-}
-    
-function search() {
-   var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
-   var jqxhr = $.get(apiUrl, function(data) {
-             if (data.length == 0)
-                console.log("noResults");
-             else
-               console.log(data);
-               loopCard(data);
-          })
-   .fail (function() {
-              console.log("fail");
-          });     
- }
-function loopCard(data){
-    //ingore credit debug hero skin mission promotion system tavern brawl
-    var len = 0;
-    var cards = [];
+    var cost_len=[];
     for(var i =0;i<=10;i++){
         cost_len[i] = 0;
     }
+    var att_len=[];
     for(var i =0;i<=12;i++){
         att_len[i] = 0;
     }
-    
-    
-    
-    $.each(data.Basic,function(i,entry){
-       if(data['Basic'][i].cost>=0){ 
-            cost_len[parseInt(data[('Basic')][i].cost)]++;
-       }
-         if(data['Basic'][i].attack>=0){ 
-            att_len[parseInt(data[('Basic')][i].attack)]++;
-         }
-        cards.push(data.Basic[i])
-    });
-    $.each(data['Blackrock Mountain'],function(i,entry){
-         if(data['Blackrock Mountain'][i].cost>=0){ 
-            cost_len[parseInt(data[('Blackrock Mountain')][i].cost)]++;
-         }
-         if(data['Blackrock Mountain'][i].attack>=0){ 
-            att_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
-         }
-         cards.push(data['Blackrock Mountain'][i]); 
-    });
-    $.each(data['Classic'],function(i,entry){
-         if(data['Classic'][i].cost>=0){ 
-            cost_len[parseInt(data[('Classic')][i].cost)]++;
-         }
-        if(data['Classic'][i].attack>=0){ 
-            att_len[parseInt(data[('Classic')][i].attack)]++;
-         }
-        cards.push(data['Classic'][i]); 
-    });
-    $.each(data['Goblins vs Gnomes'],function(i,entry){
-         if(data['Goblins vs Gnomes'][i].cost>=0){ 
-            cost_len[parseInt(data[('Goblins vs Gnomes')][i].cost)]++;
-         }
-        if(data['Goblins vs Gnomes'][i].attack>=0){ 
-            att_len[parseInt(data[('Goblins vs Gnomes')][i].attack)]++;
-         }
-        cards.push(data['Goblins vs Gnomes'][i]); 
-    });
+    var myChart;
+    function displayChart(cards){
 
-    $.each(data['Naxxramas'],function(i,entry){
-         if(data['Naxxramas'][i].cost>=0){ 
-            cost_len[parseInt(data[('Naxxramas')][i].cost)]++;
-         }
-        if(data['Naxxramas'][i].attack>=0){ 
-            att_len[parseInt(data[('Naxxramas')][i].attack)]++;
-         }
-        cards.push(data['Naxxramas'][i]); 
-    });
-    
-    $.each(data['The Grand Tournament'],function(i,entry){
-         if(data['The Grand Tournament'][i].cost>=0){ 
-            cost_len[parseInt(data[('The Grand Tournament')][i].cost)]++;
-         }
-         if(data['The Grand Tournament'][i].attack>=0){ 
-            att_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
-         }
-        cards.push(data['The Grand Tournament'][i]); 
-    });
+        //assume mapping total of each cost 
 
-    $.each(data['The League of Explorers'],function(i,entry){
-         if(data['The League of Explorers'][i].cost>=0){ 
-            cost_len[parseInt(data[('The League of Explorers')][i].cost)]++;
-         }
-        if(data['The League of Explorers'][i].attack>=0){ 
-            att_len[parseInt(data[('The League of Explorers')][i].attack)]++;
-         }
-        cards.push(data['The League of Explorers'][i]); 
-    });
-    console.log(cards);
-    
-    
-    $( "#portfolio" ).empty();
-    displayCards(cards);
-    displayChart();
-    
-}
-      
-function displayCards(cards){
-    var strHtml = "";
-    var imgUrl;
-    var numCardThisRow = 0;    
-    var counter = 0;
-    /*
-    Clear DOM before adding card to DOM
-    */
-    $( "#portfolio" ).empty();
-    
-    $.each(cards, function (i, entry) {
-        
-        imgUrl = "http://wow.zamimg.com/images/hearthstone/backs/original/Card_Back_Default.png";
-        articleLinkText = "";
-        articleUrl = "";
-        if (cards[i].img){
-             imgUrl = cards[i].img;
-            counter++;
-        
-        //  start a new row for each three tiles
-        
-            if (numCardThisRow == 0) {
-              strHtml += '<div class="row text-center slideanim slide">';
+         var myNode = document.getElementById("legend");
+            if(myNode.firstChild != null){
+               while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
             }
-
-            numCardThisRow++;
-
-
-            strHtml += '<div class="col-sm-4">'
-                        +   '<div class="thumbnail" id="cardlayer">'
-                        +    '<img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
-                        +     imgUrl
-                        +     '"alt="'
-                        +     cards[i].name
-                        +     '" width="400" height="300">'
-                        +  '</div>'
-                        + '</div>';
-
-            if (numCardThisRow == 3) {    // close the row after each 3 movies
-              strHtml += '</div>';
-              numCardThisRow = 0;
-            }  
         }
-      });
-      
-      if (numCardThisRow != 0) {    // if !=0, we haven't closed the row div
-          strHtml += '</div>';
-      }  
+        /*if(myChart){
+          myChart.destroy();
+        }*/
+
+       var data = [
+       {
+        value: cost_len[0],
+        color: "#66ccff",
+        label: "Cost 0"
+
+        }, {
+        value: cost_len[1],
+        color: "#99ccff",
+        label: "Cost 1"
+        }, {
+        value: cost_len[2],
+        color: "#cc99ff",
+        label: "Cost 2"
+        },{
+        value: cost_len[3],
+        color: "#ff99ff",
+        label: "Cost 3"  
+        },{
+        value: cost_len[4],
+        color: "#ff99cc",
+        label: "Cost 4"  
+        },{
+        value: cost_len[5],
+        color: "#ff9999",
+        label: "Cost 5"  
+        },{
+        value: cost_len[6],
+        color: "#ffcc99",
+        label: "Cost 6"  
+        },{
+        value: cost_len[7],
+        color: "#ffff99",
+        label: "Cost 7"  
+        },{
+        value: cost_len[8],
+        color: "#ccff99",
+        label: "Cost 8"  
+        },{
+        value: cost_len[9],
+        color: "#99ff99",
+        label: "Cost 9"  
+        },{
+        value: cost_len[10],
+        color: "#99ffcc",
+        label: "Cost 10"  
+        }
+
+       ];
+
+        var options = {
+            segmentShowStroke: false,
+            animateRotate: true,
+            animateScale: false,
+            percentageInnerCutout: 50
+        }
+        $('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
+        var ctx = $("#myChart").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        myChart = new Chart(ctx).Doughnut(data, options);    
 
 
-      $("#portfolio").append(strHtml);  
-      console.log("total " + counter)
+        var legendHolder = document.createElement('div');
+        legendHolder.innerHTML = myChart.generateLegend();
 
-}
+        document.getElementById('legend').appendChild(legendHolder.firstChild);
+    }
+
+    function displayName(name){
+
+        alert(name); 
+    }
+
+    function search() {
+       var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
+       var jqxhr = $.get(apiUrl, function(data) {
+                 if (data.length == 0)
+                    console.log("noResults");
+                 else
+                   console.log(data);
+                   loopCard(data);
+              })
+       .fail (function() {
+                  console.log("fail");
+              });     
+     }
+    function loopCard(data){
+        //ingore credit debug hero skin mission promotion system tavern brawl
+        var len = 0;
+        var cards = [];
+        for(var i =0;i<=10;i++){
+            cost_len[i] = 0;
+        }
+        for(var i =0;i<=12;i++){
+            att_len[i] = 0;
+        }
+
+
+
+        $.each(data.Basic,function(i,entry){
+           if(data['Basic'][i].cost>=0){ 
+                cost_len[parseInt(data[('Basic')][i].cost)]++;
+           }
+             if(data['Basic'][i].attack>=0){ 
+                att_len[parseInt(data[('Basic')][i].attack)]++;
+             }
+            cards.push(data.Basic[i])
+        });
+        $.each(data['Blackrock Mountain'],function(i,entry){
+             if(data['Blackrock Mountain'][i].cost>=0){ 
+                cost_len[parseInt(data[('Blackrock Mountain')][i].cost)]++;
+             }
+             if(data['Blackrock Mountain'][i].attack>=0){ 
+                att_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
+             }
+             cards.push(data['Blackrock Mountain'][i]); 
+        });
+        $.each(data['Classic'],function(i,entry){
+             if(data['Classic'][i].cost>=0){ 
+                cost_len[parseInt(data[('Classic')][i].cost)]++;
+             }
+            if(data['Classic'][i].attack>=0){ 
+                att_len[parseInt(data[('Classic')][i].attack)]++;
+             }
+            cards.push(data['Classic'][i]); 
+        });
+        $.each(data['Goblins vs Gnomes'],function(i,entry){
+             if(data['Goblins vs Gnomes'][i].cost>=0){ 
+                cost_len[parseInt(data[('Goblins vs Gnomes')][i].cost)]++;
+             }
+            if(data['Goblins vs Gnomes'][i].attack>=0){ 
+                att_len[parseInt(data[('Goblins vs Gnomes')][i].attack)]++;
+             }
+            cards.push(data['Goblins vs Gnomes'][i]); 
+        });
+
+        $.each(data['Naxxramas'],function(i,entry){
+             if(data['Naxxramas'][i].cost>=0){ 
+                cost_len[parseInt(data[('Naxxramas')][i].cost)]++;
+             }
+            if(data['Naxxramas'][i].attack>=0){ 
+                att_len[parseInt(data[('Naxxramas')][i].attack)]++;
+             }
+            cards.push(data['Naxxramas'][i]); 
+        });
+
+        $.each(data['The Grand Tournament'],function(i,entry){
+             if(data['The Grand Tournament'][i].cost>=0){ 
+                cost_len[parseInt(data[('The Grand Tournament')][i].cost)]++;
+             }
+             if(data['The Grand Tournament'][i].attack>=0){ 
+                att_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
+             }
+            cards.push(data['The Grand Tournament'][i]); 
+        });
+
+        $.each(data['The League of Explorers'],function(i,entry){
+             if(data['The League of Explorers'][i].cost>=0){ 
+                cost_len[parseInt(data[('The League of Explorers')][i].cost)]++;
+             }
+            if(data['The League of Explorers'][i].attack>=0){ 
+                att_len[parseInt(data[('The League of Explorers')][i].attack)]++;
+             }
+            cards.push(data['The League of Explorers'][i]); 
+        });
+        console.log(cards);
+
+
+        $( "#portfolio" ).empty();
+        displayCards(cards);
+        displayChart();
+
+    }
+
+    function displayCards(cards){
+        var strHtml = "";
+        var imgUrl;
+        var numCardThisRow = 0;    
+        var counter = 0;
+        /*
+        Clear DOM before adding card to DOM
+        */
+        $( "#portfolio" ).empty();
+
+        $.each(cards, function (i, entry) {
+
+            imgUrl = "http://wow.zamimg.com/images/hearthstone/backs/original/Card_Back_Default.png";
+            articleLinkText = "";
+            articleUrl = "";
+            if (cards[i].img){
+                 imgUrl = cards[i].img;
+                counter++;
+
+            //  start a new row for each three tiles
+
+                if (numCardThisRow == 0) {
+                  strHtml += '<div class="row text-center slideanim slide">';
+                }
+
+                numCardThisRow++;
+
+
+                strHtml += '<div class="col-sm-4">'
+                            +   '<div class="thumbnail" id="cardlayer">'
+                            +    '<img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
+                            +     imgUrl
+                            +     '"alt="'
+                            +     cards[i].name
+                            +     '" width="400" height="300">'
+                            +  '</div>'
+                            + '</div>';
+
+                if (numCardThisRow == 3) {    // close the row after each 3 movies
+                  strHtml += '</div>';
+                  numCardThisRow = 0;
+                }  
+            }
+          });
+
+          if (numCardThisRow != 0) {    // if !=0, we haven't closed the row div
+              strHtml += '</div>';
+          }  
+
+
+          $("#portfolio").append(strHtml);  
+          console.log("total " + counter)
+
+    }
+
+</script>    
+
+
+<div data-role="page" id="pageone">
+  <div data-role="header">
+    <h1>Welcome To My Homepage</h1>
+      <div data-role="navbar">
+      <ul>
+        <li><a href="#pageone" data-icon="home"></a></li>
+        <li><a href="#pagethree" data-icon="arrow-r"></a></li>
+        <li><a href="#" data-icon="user"></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role="main" class="ui-content">        
+    <form id="search-form">
+        <input type="text" id="search" placeholder="Search by name" /> 
+        <!--<input type="submit" data-inline="true" data-mini="true" value="Submit Button" />-->
+    </form>  
+   
+    <a href="#pagetwo" data-role="button" data-mini="true" data-inline="true">Advanced Search</a>
     
-</script>
+  </div>
+  <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div> 
+
+<div data-role="page" data-dialog="true" id="pagetwo">
+  <div data-role="header">
+    <h1>Advanced Search</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form>
+        <fieldset data-role="controlgroup" data-mini="true" data-iconpos="right">
+            <legend>Search by:</legend>
+            <input type="radio" name="radio-choice-w-6" id="radio-choice-w-6a" value="cost" checked="checked">
+            <label for="radio-choice-w-6a">Cost</label>
+            <input type="radio" name="radio-choice-w-6" id="radio-choice-w-6b" value="attack">
+            <label for="radio-choice-w-6b">Attack</label>
+            <input type="radio" name="radio-choice-w-6" id="radio-choice-w-6c" value="health">
+            <label for="radio-choice-w-6c">Health</label>
+        </fieldset>
+    </form>
+    <input type="text" id="search" placeholder="Search by..." />  
+  </div> 
+
+  <div data-role="footer">
+  </div>
+</div>
+    
+<div data-role="page" id="pagethree">
+  <div data-role="header">
+    <h1>Page three header</h1>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#pageone" data-icon="home"></a></li>
+        <li><a href="#pageone" data-icon="arrow-l"></a></li>
+        <li><a href="#" data-icon="user">Search?</a></li>
+      </ul>
+    </div>  
+  </div>
+
+  <div data-role="main" class="ui-content">
+   <button onclick="search()">Run the request</button> 
+      <div id="output"></div>
+      <div id="portfolio" class="container-fluid text-center bg-grey">
+      </div>
+        <div id="chart-area">
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <div id="legend"></div>  
+      </div>  
+  </div> 
+
+  <div data-role="footer">
+    <h1>Footer Text</h1>
+  </div>
+</div>     
+</body>
+
 </html>
