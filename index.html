@@ -125,6 +125,30 @@
                   console.log("fail");
               });     
     }
+    //due to simple search and advance search return two difference formated JSON
+    function simpleLoop(data){
+        for(var i =0;i<=10;i++){
+            cost_len[i] = 0;
+        }
+        for(var i =0;i<=12;i++){
+            att_len[i] = 0;
+        }
+        for(var i =0;i<=12;i++){
+            health_len[i] = 0;
+        }
+         $.each(data,function(i,entry){
+            if(data[i].cost>=0){ 
+                cost_len[parseInt(datap[i].cost)]++;
+           }
+            if(data[i].attack>=0){ 
+                att_len[parseInt(data[i].attack)]++;
+            }
+             if(data[i].health>=0){ 
+                health_len[parseInt(data[i].attack)]++;
+            }
+         });   
+    }
+
     
     function loopCard(data){
         console.log(data); 
@@ -138,7 +162,9 @@
             att_len[i] = 0;
         }
 
-
+        for(var i =0;i<=12;i++){
+            health_len[i] = 0;
+        }
 
         $.each(data.Basic,function(i,entry){
            if(data['Basic'][i].cost>=0){ 
@@ -156,6 +182,9 @@
              if(data['Blackrock Mountain'][i].attack>=0){ 
                 att_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
              }
+            if(data['Blackrock Mountain'][i].health>=0){ 
+                health_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
+             }
              cards.push(data['Blackrock Mountain'][i]); 
         });
         $.each(data['Classic'],function(i,entry){
@@ -165,14 +194,20 @@
             if(data['Classic'][i].attack>=0){ 
                 att_len[parseInt(data[('Classic')][i].attack)]++;
              }
+            if(data['Classic'][i].health>=0){ 
+                health_len[parseInt(data[('Classic')][i].attack)]++;
+             }
             cards.push(data['Classic'][i]); 
         });
         $.each(data['Goblins vs Gnomes'],function(i,entry){
              if(data['Goblins vs Gnomes'][i].cost>=0){ 
                 cost_len[parseInt(data[('Goblins vs Gnomes')][i].cost)]++;
              }
-            if(data['Goblins vs Gnomes'][i].attack>=0){ 
-                att_len[parseInt(data[('Goblins vs Gnomes')][i].attack)]++;
+            if(data['Classic'][i].attack>=0){ 
+                att_len[parseInt(data[('Classic')][i].attack)]++;
+             }
+            if(data['Classic'][i].health>=0){ 
+                health_len[parseInt(data[('Classic')][i].attack)]++;
              }
             cards.push(data['Goblins vs Gnomes'][i]); 
         });
@@ -181,8 +216,11 @@
              if(data['Naxxramas'][i].cost>=0){ 
                 cost_len[parseInt(data[('Naxxramas')][i].cost)]++;
              }
-            if(data['Naxxramas'][i].attack>=0){ 
-                att_len[parseInt(data[('Naxxramas')][i].attack)]++;
+            if(data['Classic'][i].attack>=0){ 
+                att_len[parseInt(data[('Classic')][i].attack)]++;
+             }
+            if(data['Classic'][i].health>=0){ 
+                health_len[parseInt(data[('Classic')][i].attack)]++;
              }
             cards.push(data['Naxxramas'][i]); 
         });
@@ -194,6 +232,9 @@
              if(data['The Grand Tournament'][i].attack>=0){ 
                 att_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
              }
+            if(data['The Grand Tournament'][i].health>=0){ 
+                health_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
+             }
             cards.push(data['The Grand Tournament'][i]); 
         });
 
@@ -203,6 +244,9 @@
              }
             if(data['The League of Explorers'][i].attack>=0){ 
                 att_len[parseInt(data[('The League of Explorers')][i].attack)]++;
+             }
+            if(data['The League of Explorers'][i].health>=0){ 
+                health_len[parseInt(data[('The League of Explorers')][i].attack)]++;
              }
             cards.push(data['The League of Explorers'][i]); 
         });
@@ -281,8 +325,13 @@
     for(var i =0;i<=12;i++){
         att_len[i] = 0;
     }
+    var health_len=[];
+    for(var i =0;i<=12;i++){
+        health_len[i] = 0;
+    }
     var myChart;
     var myChart2;
+    var myChart3;
     function displayChart(cards){
         //assume mapping total of each cost 
 
@@ -297,6 +346,7 @@
         }*/
 
        data = [
+           
        {
         value: cost_len[0],
         color: "#66ccff",
@@ -395,29 +445,98 @@
         }
 
        ];
+          data3 = [
+       {
+        value: health_len[0],
+        color: "#66ccff",
+        label: "Health 0"
 
+        }, {
+        value: health_len[1],
+        color: "#99ccff",
+        label: "Health 1"
+        }, {
+        value: health_len[2],
+        color: "#cc99ff",
+        label: "Health 2"
+        },{
+        value: health_len[3],
+        color: "#ff99ff",
+        label: "Health 3"  
+        },{
+        value: health_len[4],
+        color: "#ff99cc",
+        label: "Health 4"  
+        },{
+        value: health_len[5],
+        color: "#ff9999",
+        label: "Health 5"  
+        },{
+        value: health_len[6],
+        color: "#ffcc99",
+        label: "Health 6"  
+        },{
+        value: health_len[7],
+        color: "#ffff99",
+        label: "Health 7"  
+        },{
+        value: health_len[8],
+        color: "#ccff99",
+        label: "Health 8"  
+        },{
+        value: health_len[9],
+        color: "#99ff99",
+        label: "Health 9"  
+        },{
+        value: health_len[10],
+        color: "#99ffcc",
+        label: "Health 10"  
+        }
+
+       ];
         options = {
             segmentShowStroke: false,
             animateRotate: false,
             animateScale: false,
-            percentageInnerCutout: 50
+            percentageInnerCutout: 50,
         }
        
         var ctx = $("#myChart").get(0).getContext("2d");
         var ctx2 = $("#myChart2").get(0).getContext("2d");
+        var ctx3 = $("#myChart3").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
         myChart = new Chart(ctx).Doughnut(data, options);    
         myChart2 = new Chart(ctx2).Doughnut(data2,options);
-
+        myChart3 = new Chart(ctx3).Doughnut(data3,options);
         var legendHolder = document.createElement('div');
         legendHolder.innerHTML = myChart.generateLegend();
-
-        document.getElementById('legend').appendChild(legendHolder.firstChild);
+        var node = document.getElementById("legend").firstChild;
+        if(node){
+            document.getElementById('legend').replaceChild(legendHolder.firstChild,node);
+        }
+        else{
+            document.getElementById('legend').appendChild(legendHolder.firstChild);
+        }
         
-        var legendHolder = document.createElement('div');
-        legendHolder.innerHTML = myChart2.generateLegend();
-
-        document.getElementById('legend2').appendChild(legendHolder.firstChild);
+        var legendHolder2 = document.createElement('div');
+        legendHolder2.innerHTML = myChart2.generateLegend();
+        var node = document.getElementById("legend2").firstChild;
+        if(node){
+            document.getElementById('legend2').replaceChild(legendHolder2.firstChild,node);
+        }
+        else{
+            document.getElementById('legend2').appendChild(legendHolder2.firstChild);
+        }
+        
+        var legendHolder3 = document.createElement('div');
+        legendHolder3.innerHTML = myChart3.generateLegend();
+        var node = document.getElementById("legend3").firstChild;
+        if(node){
+            document.getElementById('legend3').replaceChild(legendHolder3.firstChild,node);
+        }
+        else{
+            document.getElementById('legend3').appendChild(legendHolder3.firstChild);
+        }
     }
     
     
@@ -550,19 +669,29 @@
   </div>
 
   <div data-role="main" class="ui-content container">
-       <div id="output"></div>
+    <div id="output">
         <div id="chart-area">
-            <h1>Cost</h1>
             <canvas id="myChart" width="400" height="400">
             </canvas>
+            
         <div id="legend"></div>  
+      </div>
+    </div>
+      <div id="output">
         <div id="chart-area">
-            <h1>Attack</h1>
             <canvas id="myChart2" width="400" height="400">
             </canvas>
         <div id="legend2"></div>  
       </div> 
-  </div> 
+    </div>
+      <div id="output">
+        <div id="chart-area">
+            <canvas id="myChart3" width="400" height="400">
+            </canvas>
+        <div id="legend3"></div>  
+      </div> 
+    </div>
+    </div> 
 
   <div data-role="footer" data-position="fixed">
     <h1>&#169; Anthony Nedumgottil &amp; Weiheng Ruan 2016 <br />
