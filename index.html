@@ -21,9 +21,24 @@
 
 </style>
 </head>
-<body>
-<script>
+
     
+<body>
+    
+<script>
+    //change nav bar background/color
+    //change header and footer color
+    //chagne text color
+    //add a range to search
+    //change the alerts to popup
+    //fix the header text
+    //remove chart on new search            done!
+    //add display for simple search
+    //center graphs/css
+    
+    
+    //bonus
+    //compare two card
     
     $(document).ready(function(){
         $('#simple-search-form').submit(function(){
@@ -74,6 +89,7 @@
                  else
                      console.log(data); //DEBUG
                      displayCards(data);
+                     
                     
               })
        .fail (function() {
@@ -196,10 +212,11 @@
         $( "#portfolio" ).empty();
         displayCards(cards);
         
-        displayChart();
+    
 
     }
-
+    var data;
+    var options;
     function displayCards(cards){
         var strHtml = "";
         var imgUrl;
@@ -265,6 +282,7 @@
         att_len[i] = 0;
     }
     var myChart;
+    var myChart2;
     function displayChart(cards){
         //assume mapping total of each cost 
 
@@ -278,7 +296,7 @@
           myChart.destroy();
         }*/
 
-       var data = [
+       data = [
        {
         value: cost_len[0],
         color: "#66ccff",
@@ -327,25 +345,93 @@
         }
 
        ];
+        
+        data2 = [
+       {
+        value: att_len[0],
+        color: "#66ccff",
+        label: "Att 0"
 
-        var options = {
+        }, {
+        value: att_len[1],
+        color: "#99ccff",
+        label: "Att 1"
+        }, {
+        value: att_len[2],
+        color: "#cc99ff",
+        label: "Att 2"
+        },{
+        value: att_len[3],
+        color: "#ff99ff",
+        label: "Att 3"  
+        },{
+        value: att_len[4],
+        color: "#ff99cc",
+        label: "Att 4"  
+        },{
+        value: att_len[5],
+        color: "#ff9999",
+        label: "Att 5"  
+        },{
+        value: att_len[6],
+        color: "#ffcc99",
+        label: "Att 6"  
+        },{
+        value: att_len[7],
+        color: "#ffff99",
+        label: "Att 7"  
+        },{
+        value: att_len[8],
+        color: "#ccff99",
+        label: "Att 8"  
+        },{
+        value: att_len[9],
+        color: "#99ff99",
+        label: "Att 9"  
+        },{
+        value: att_len[10],
+        color: "#99ffcc",
+        label: "Att 10"  
+        }
+
+       ];
+
+        options = {
             segmentShowStroke: false,
-            animateRotate: true,
+            animateRotate: false,
             animateScale: false,
             percentageInnerCutout: 50
         }
-        $('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
+       
         var ctx = $("#myChart").get(0).getContext("2d");
+        var ctx2 = $("#myChart2").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
         myChart = new Chart(ctx).Doughnut(data, options);    
-
+        myChart2 = new Chart(ctx2).Doughnut(data2,options);
 
         var legendHolder = document.createElement('div');
         legendHolder.innerHTML = myChart.generateLegend();
 
         document.getElementById('legend').appendChild(legendHolder.firstChild);
-    }
+        
+        var legendHolder = document.createElement('div');
+        legendHolder.innerHTML = myChart2.generateLegend();
 
+        document.getElementById('legend2').appendChild(legendHolder.firstChild);
+    }
+    
+    
+    $(document).on("pageshow", "#pagefour", function(event) {
+        if(myChart){
+            myChart.destroy();
+        }
+        if(myChart2){
+            myChart2.destroy();
+        }
+        displayChart();
+        //$('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
+    });
+    
     function displayName(name){
 
         alert(name); 
@@ -370,7 +456,7 @@
 
 
 <div data-role="page" id="pageone">
-  <div data-role="header">
+  <div data-role="header" >
     <h1>Welcome To HearthSearch</h1>
       <div data-role="navbar">
       <ul>
@@ -440,7 +526,9 @@
    <button onclick="search()">Run the request</button> 
       <div id="output"></div>
       <div id="portfolio" class="container-fluid text-center bg-grey">
+          
       </div>
+      
        
   </div> 
 
@@ -449,7 +537,7 @@
       Hearthstone Metro Icon by InfernoIII</h1>
   </div>
 </div> 
-<div data-role="page" id="pagefour">
+<div data-role="page" id="pagefour" >
   <div data-role="header" id="pg4-header">
     <h1><span id="pg4-header-span">Page three header</span></h1>
     <div data-role="navbar">
@@ -461,16 +549,23 @@
     </div>  
   </div>
 
-  <div data-role="main" class="ui-content">
-      <div id="output"></div>
+  <div data-role="main" class="ui-content container">
+       <div id="output"></div>
         <div id="chart-area">
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <h1>Cost</h1>
+            <canvas id="myChart" width="400" height="400">
+            </canvas>
         <div id="legend"></div>  
-      </div>  
+        <div id="chart-area">
+            <h1>Attack</h1>
+            <canvas id="myChart2" width="400" height="400">
+            </canvas>
+        <div id="legend2"></div>  
+      </div> 
   </div> 
 
   <div data-role="footer" data-position="fixed">
-    <h1>&#169; Anthony Nedumgottil & Weiheng Ruan 2016 <br />
+    <h1>&#169; Anthony Nedumgottil &amp; Weiheng Ruan 2016 <br />
       Hearthstone Metro Icon by InfernoIII</h1>
   </div>
 </div>         
