@@ -29,7 +29,7 @@
     
     //chagne text color
     //add a range to search
-    //change the alerts to popup
+    //change the alerts to popup            done!
     //fix the header text
     //center graphs/css
     
@@ -215,6 +215,11 @@
              if(data['Basic'][i].attack>=0){ 
                 att_len[parseInt(data[('Basic')][i].attack)]++;
              }
+            if(data['Basic'][i].health){ 
+                if(data['Basic'][i].health>=0){ 
+                    health_len[parseInt(data[('Blackrock Mountain')][i].health)]++;
+                 }
+            }
             cards.push(data.Basic[i])
         });
         $.each(data['Blackrock Mountain'],function(i,entry){
@@ -224,9 +229,11 @@
              if(data['Blackrock Mountain'][i].attack>=0){ 
                 att_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
              }
-            if(data['Blackrock Mountain'][i].health>=0){ 
-                health_len[parseInt(data[('Blackrock Mountain')][i].attack)]++;
-             }
+            if(data['Blackrock Mountain'][i].health){ 
+                if(data['Blackrock Mountain'][i].health>=0){ 
+                    health_len[parseInt(data[('Blackrock Mountain')][i].health)]++;
+                 }
+            }
              cards.push(data['Blackrock Mountain'][i]); 
         });
         $.each(data['Classic'],function(i,entry){
@@ -236,21 +243,25 @@
             if(data['Classic'][i].attack>=0){ 
                 att_len[parseInt(data[('Classic')][i].attack)]++;
              }
-            if(data['Classic'][i].health>=0){ 
-                health_len[parseInt(data[('Classic')][i].attack)]++;
-             }
+            if(data['Classic'][i].health){ 
+                if(data['Classic'][i].health>=0){ 
+                    health_len[parseInt(data[('Classic')][i].health)]++;
+                 }
+            }
             cards.push(data['Classic'][i]); 
         });
         $.each(data['Goblins vs Gnomes'],function(i,entry){
              if(data['Goblins vs Gnomes'][i].cost>=0){ 
                 cost_len[parseInt(data[('Goblins vs Gnomes')][i].cost)]++;
              }
-            if(data['Classic'][i].attack>=0){ 
-                att_len[parseInt(data[('Classic')][i].attack)]++;
+            if(data['Goblins vs Gnomes'][i].attack>=0){ 
+                att_len[parseInt(data[('Goblins vs Gnomes')][i].attack)]++;
              }
-            if(data['Classic'][i].health>=0){ 
-                health_len[parseInt(data[('Classic')][i].attack)]++;
-             }
+            if(data['Goblins vs Gnomes'][i].health){ 
+                if(data['Goblins vs Gnomes'][i].health>=0){ 
+                    health_len[parseInt(data[('Goblins vs Gnomes')][i].health)]++;
+                 }
+            }
             cards.push(data['Goblins vs Gnomes'][i]); 
         });
 
@@ -258,12 +269,14 @@
              if(data['Naxxramas'][i].cost>=0){ 
                 cost_len[parseInt(data[('Naxxramas')][i].cost)]++;
              }
-            if(data['Classic'][i].attack>=0){ 
-                att_len[parseInt(data[('Classic')][i].attack)]++;
+            if(data['Naxxramas'][i].attack>=0){ 
+                att_len[parseInt(data[('Naxxramas')][i].attack)]++;
              }
-            if(data['Classic'][i].health>=0){ 
-                health_len[parseInt(data[('Classic')][i].attack)]++;
-             }
+            if(data['Naxxramas'][i].health){ 
+                if(data['Naxxramas'][i].health>=0){ 
+                    health_len[parseInt(data[('Naxxramas')][i].health)]++;
+                 }
+            }
             cards.push(data['Naxxramas'][i]); 
         });
 
@@ -274,9 +287,11 @@
              if(data['The Grand Tournament'][i].attack>=0){ 
                 att_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
              }
-            if(data['The Grand Tournament'][i].health>=0){ 
-                health_len[parseInt(data[('The Grand Tournament')][i].attack)]++;
-             }
+            if(data['The Grand Tournament'][i].health){ 
+                if(data['The Grand Tournament'][i].health>0){ 
+                    health_len[parseInt(data[('The Grand Tournament')][i].health)]++;
+                 }
+            }
             cards.push(data['The Grand Tournament'][i]); 
         });
 
@@ -287,9 +302,11 @@
             if(data['The League of Explorers'][i].attack>=0){ 
                 att_len[parseInt(data[('The League of Explorers')][i].attack)]++;
              }
-            if(data['The League of Explorers'][i].health>=0){ 
-                health_len[parseInt(data[('The League of Explorers')][i].attack)]++;
-             }
+            if(data['The League of Explorers'][i].health){
+                if(data['The League of Explorers'][i].health>=0){ 
+                    health_len[parseInt(data[('The League of Explorers')][i].health)]++;
+                 }   
+            }
             cards.push(data['The League of Explorers'][i]); 
         });
         console.log(cards);
