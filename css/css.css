@@ -1,11 +1,38 @@
 
 .ui-page{
   background: #4A5A7E;
+ 
 }
 .ui-header{
-  background: #2C447A;
+  background: #394460!important;
+    background-color:#394460 !important;
+    border-color:#394460!important ;
+    color:#ffffff!important ;
+    text-shadow:0  0  0  #ffffff!important ;
+    font-weight:bold!important;
+}
+.ui-footer{
+  background: #394460!important;
+    background-color:#394460 !important;
+    border-color:#394460!important ;
+    color:#ffffff!important ;
+    text-shadow:0  0  0  #ffffff!important ;
+    font-weight:bold!important;  
+}
+.navbar ul li a {
+    background: #394460!important;
+      border-color:#262d40!important ;
 }
 
+navbar ul li a.ui-btn-active {
+    background: linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5 !important;
+    background: #67497a; /* Old browsers */
+    background: linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5 !important; /* FF3.6+ */
+    background: -webkit-linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5 !important; /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5 !important; /* Opera 11.10+ */
+    background: -ms-linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5 !important; /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5393C5', endColorstr='#6FACD5',GradientType=0 ); /* IE6-9 */       
+}
 ul {
   list-style: none;
 }
