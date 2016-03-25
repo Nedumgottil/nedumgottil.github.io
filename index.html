@@ -26,14 +26,11 @@
 <body>
     
 <script>
-    //change nav bar background/color
-    //change header and footer color
+    
     //chagne text color
     //add a range to search
     //change the alerts to popup
     //fix the header text
-    //remove chart on new search            done!
-    //add display for simple search
     //center graphs/css
     
     
@@ -41,6 +38,26 @@
     //compare two card
     
     $(document).ready(function(){
+        if($.mobile.activePage){
+            var activePage = $.mobile.activePage.attr("id");
+            console.log(activePage);
+            if(activePage == "pageone"){
+              var msg= "Hit 'enter' to search"
+              toast(msg);  
+            }
+            if(activePage == "pagethree"){
+              if($("portfolio").is(':empty')){
+                  console.log("heoll");
+                  var msg= "Search something first :)"
+                  toast(msg);  
+              }else{
+                  var msg= "Click on a card for more info"
+                  toast(msg); 
+              }    
+               
+            }
+        }
+        
         $('#simple-search-form').submit(function(){
             if($("#search").val().length> 0){
                 console.log("Ayyyy");
@@ -66,6 +83,31 @@
         })
     });
     
+    function toast(message) {
+        console.log("toast");
+    var $toast = $('<div class="ui-loader ui-overlay-shadow ui-body-e ui-corner-all"><h3>' + message + '</h3></div>');
+
+    $toast.css({
+        display: 'block', 
+        background: '#fff',
+        opacity: 0.90, 
+        position: 'fixed',
+        padding: '7px',
+        'text-align': 'center',
+        width: '270px',
+        left: ($(window).width() - 284) / 2,
+        top: $(window).height() / 2 - 20
+    });
+
+    var removeToast = function(){
+        $(this).remove();
+    };
+
+    $toast.click(removeToast);
+
+    $toast.appendTo($.mobile.pageContainer).delay(2000);
+    $toast.fadeOut(400, removeToast);
+}
     $( document ).bind( 'mobileinit', function(){
       $.mobile.loader.prototype.options.text = "loading";
       $.mobile.loader.prototype.options.textVisible = false;
@@ -494,11 +536,13 @@
         }
 
        ];
-        options = {
+       var options = {
             segmentShowStroke: false,
             animateRotate: false,
             animateScale: false,
             percentageInnerCutout: 50,
+            scaleFontFamily : "'Trebuchet'",
+            scaleFontColor : "#ffffff",
         }
        
         var ctx = $("#myChart").get(0).getContext("2d");
@@ -627,7 +671,7 @@
     
   </div>
   <div data-role="footer" data-position="fixed">
-    <h1>&#169; Anthony Nedumgottil & Weiheng Ruan 2016 <br />
+    <h1>&#169; Anthony Nedumgottil &amp; Weiheng Ruan 2016 <br />
       Hearthstone Metro Icon by InfernoIII</h1>
   </div>
 </div> 
@@ -649,7 +693,7 @@
         </fieldset>
     <form id="adv-search-form">
         <input type="number" id="adv-search" placeholder="Search by..." /> 
-        <input type="submit" placeholder="Test">
+        <input type="submit" value="Submit">
     </form>
      
   </div> 
@@ -660,8 +704,8 @@
     
 <div data-role="page" id="pagethree">
   <div data-role="header" id="pg3-header">
-    <h1><span id="pg3-header-span">Page three header</span></h1>
-    <div data-role="navbar">
+    <h1><span id="pg3-header-span">Hello!</span></h1>
+    <div data-role="navbar" class="navbar">
       <ul>
         <li><a href="#pageone" data-icon="home"></a></li>
         <li><a href="#pageone" data-icon="arrow-l"></a></li>
@@ -671,27 +715,22 @@
   </div>
 
   <div data-role="main" class="ui-content">
-    <div data-role="popup" id="popupBasic">
-        
+    <div data-role="popup" id="popupBasic">    
     </div>
-   <button onclick="search()">Run the request</button> 
       <div id="output"></div>
-      <div id="portfolio" class="container-fluid text-center bg-grey">
-          
-      </div>
-      
-       
+      <div id="portfolio" class="container-fluid text-center bg-grey"> 
+    </div>    
   </div> 
 
   <div data-role="footer" data-position="fixed">
-    <h1>&#169; Anthony Nedumgottil & Weiheng Ruan 2016 <br />
+    <h1>&#169; Anthony Nedumgottil &amp; Weiheng Ruan 2016 <br />
       Hearthstone Metro Icon by InfernoIII</h1>
   </div>
 </div> 
 <div data-role="page" id="pagefour" >
   <div data-role="header" id="pg4-header">
     <h1><span id="pg4-header-span">Page three header</span></h1>
-    <div data-role="navbar">
+    <div data-role="navbar" class="navbar">
       <ul>
         <li><a href="#pageone" data-icon="home"></a></li>
         <li><a href="#pagethree" data-icon="arrow-l"></a></li>
