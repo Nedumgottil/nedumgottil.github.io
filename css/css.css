@@ -40,18 +40,20 @@ ul {
   list-style: none;
 }
 ul li {
+  text-shadow:none !important ;
   display: block;
   padding-left: 30px;
   position: relative;
   margin-bottom: 4px;
   border-radius: 5px;
   padding: 2px 8px 2px 28px;
-  font-size: 200px:
+  font-size: 20px;
+  color: darkgray;
   cursor: default;
   -webkit-transition: background-color 200ms ease-in-out;
   -moz-transition: background-color 200ms ease-in-out;
   -o-transition: background-color 200ms ease-in-out;
-  transition: background-color 200ms ease-in-out;
+  
 }
 li span {
   display: block;
@@ -63,7 +65,8 @@ li span {
   border-radius: 5px;
 }
 #chart-area > *{
-  float:left
+  padding-right:10px;
+  float:left;
 }
 .thumbnail{
     border-style: hidden;
