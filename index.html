@@ -290,12 +290,12 @@
 
 
                 strHtml += '<div class="col-sm-4">'
-                            +   '<div class="thumbnail" id="cardlayer">'
-                            +    '<img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
+                            +   '<div class="thumbnail" id="cardlayer" href="#popupBasic" data-rel="popup" >'
+                            +    '<a href="#popupBasic" data-rel="popup"><img onclick="displayName(\''+ cards[i].name +'\')" id="card" src="'
                             +     imgUrl
                             +     '"alt="'
                             +     cards[i].name
-                            +     '" width="400" height="300">'
+                            +     '" width="400" height="300"></a>'
                             +  '</div>'
                             + '</div>';
 
@@ -555,8 +555,33 @@
     });
     
     function displayName(name){
+       var info="";    
+       var apiUrl = "https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/"+name+"?mashape-key=ClikMZBFwmmshpShNajq3Jb6564Zp1rfrCBjsn15xgY91vMxeO";
+       console.log(apiUrl);
+       var jqxhr = $.get(apiUrl, function(data) {
+                 if (data.length == 0)
+                    console.log("noResults");
+                 else{
+                     console.log(data); //DEBUG
+                     info +='<p>'+'Name: '+data[0].name+'<br>'+ 'Cardset: '+data[0].cardSet+'<br>'+'Type: '+data[0].type+'<br>';
+                        if(data[0].rarity)
+                            info += 'Rarity: '+data[0].rarity+'<br>';
+                        if(data[0].flavor)
+                           info += 'Flavor Text: '+data[0].flavor+'<br>';
+                        if(data[0].artist)    
+                            info += 'Artist: '+data[0].artist+'<br>';
+                      info += '</p>';
+                     console.log(info);
+                     var div = document.getElementById('popupBasic');
 
-        alert(name); 
+                    div.innerHTML = info;
+                 }
+                    
+              })
+       .fail (function() {
+                  console.log("fail");
+              });     
+
     }
 
     function search() {
@@ -645,6 +670,9 @@
   </div>
 
   <div data-role="main" class="ui-content">
+    <div data-role="popup" id="popupBasic">
+        
+    </div>
    <button onclick="search()">Run the request</button> 
       <div id="output"></div>
       <div id="portfolio" class="container-fluid text-center bg-grey">
@@ -674,22 +702,20 @@
   <div data-role="main" class="ui-content container">
     <div id="output">
         <div id="chart-area">
-            <canvas id="myChart" width="400" height="400">
-            </canvas>
-            
+            <canvas id="myChart" width="200" height="200"></canvas>
         <div id="legend"></div>  
       </div>
     </div>
       <div id="output">
         <div id="chart-area">
-            <canvas id="myChart2" width="400" height="400">
+            <canvas id="myChart2" width="200" height="200">
             </canvas>
         <div id="legend2"></div>  
       </div> 
     </div>
       <div id="output">
         <div id="chart-area">
-            <canvas id="myChart3" width="400" height="400">
+            <canvas id="myChart3" width="200" height="200">
             </canvas>
         <div id="legend3"></div>  
       </div> 
