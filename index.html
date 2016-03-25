@@ -138,7 +138,7 @@
         }
          $.each(data,function(i,entry){
             if(data[i].cost>=0){ 
-                cost_len[parseInt(datap[i].cost)]++;
+                cost_len[parseInt(data[i].cost)]++;
            }
             if(data[i].attack>=0){ 
                 att_len[parseInt(data[i].attack)]++;
@@ -546,6 +546,9 @@
         }
         if(myChart2){
             myChart2.destroy();
+        }
+         if(myChart3){
+            myChart3.destroy();
         }
         displayChart();
         //$('#canvas').replaceWith('<canvas id="myChart" width="400" height="400"></canvas>');
